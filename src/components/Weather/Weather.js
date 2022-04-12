@@ -5,18 +5,19 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import axios from 'axios';
 
+
 export default function Weather() {
-const[weather, setWeather] = useState(undefined);
+    const[weather, setWeather] = useState(undefined);
 
     useEffect(()=>{
-    axios.get("http://localhost:8080/weather?lat=39.8&lon=75")
-    .then(response=>{
-        console.log(response.data)
-    });
+        axios.get("http://localhost:8084/weather?lat=39.683723&lon=-75.749657")
+        .then(response => {
+            setWeather(response.data);
+        });
+    },[]);
 
-},[]);
-
-  return (
+    console.log("Value of Weather:",weather);
+    return (
     <Box sx={{ minWidth: 275 }}>
         <Card variant="outlined">
             <React.Fragment>
@@ -24,21 +25,26 @@ const[weather, setWeather] = useState(undefined);
                     <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
                         Todays Forcast
                     </Typography>
+                    
                     <Typography variant="h5" component="div">
-                        59.6
+                        {weather?.main?.temp}
                     </Typography>
                     <Typography variant="body2">
-                        Sunrise : 5:30am
+                        City : { weather?.name}
                         <br />
-                        Sunset : 7:30 pm
+                        Temperature : {weather?.main?.temp}
+                        <br/>
+                        Feels Like : {weather?.main?.feels_like}
+                        <br/>
+                        Humidity : {weather?.main?.humidity}
+                
                     </Typography>
                 </CardContent>
             </React.Fragment>
-         </Card>
+            </Card>
     </Box>
-  );
+    );
 }
-
 
 
 
